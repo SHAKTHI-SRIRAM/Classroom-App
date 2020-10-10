@@ -1,0 +1,19 @@
+.sidebar {
+    background-color: rgb(137, 183, 253) !important;
+}
+.sidebar-comp {
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: center;
+    padding: 15px;
+    border-bottom: 1px solid gray !important;
+
+}
+.sidebar-comp > span {
+    font-family: 'Abeezee';
+    font-weight: 900;
+    margin: 10px auto !important;
+}
+.sidebar-comp:hover {
+    background-color: whitesmoke;
+}

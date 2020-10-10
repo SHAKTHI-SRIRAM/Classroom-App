@@ -8,3 +8,4 @@ class ClassroomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classroom
         fields = ['classname', 'teacher1', 'teacher2', 'teacher3']
+
