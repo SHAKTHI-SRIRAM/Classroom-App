@@ -1,7 +1,9 @@
 from django.urls import path
 
-from .views import home
+from . import views
 
 urlpatterns = [
-    path('', home, name='home')
+    # path('create-classroom/', views.api_classroom_create_view, name='api_classroom_create'),
+    path('classroom/', views.ClassroomView.as_view(), name='api_classroom'),
+    # path('classrooms/', views.api_classroom_list_view, name='api_classroom_list'),
 ]

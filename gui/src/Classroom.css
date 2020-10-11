@@ -1,0 +1,204 @@
+.classroom{
+    padding: 2vw;
+    background-color: rgb(225, 225, 225);
+    width: 85vw;
+    height: 89.5vh;
+    overflow-y: overlay;
+}
+
+.classroom-top {
+    background-color: rgba(58, 129, 236, 0.9);
+    width: 100%;
+    height: 200px;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 10px grey;
+}
+.classroom-top > h1 {
+    color: white;
+    padding: 20px 20px;
+    font-size: 35px;
+}
+.teachers {
+    display: flex;
+    flex: left;
+    margin-left: 40px;
+    margin-right: 40px;
+    border-bottom: grey 1px solid;
+}
+.teachers > h5 {
+    color: rgb(83, 83, 83);
+    font-weight: 900;
+    font-size: 17px;
+}
+.stats {
+    display: flex;
+    flex: left;
+}
+.stats > h3 {
+    margin: 10px 40px;
+    color: rgb(216, 216, 216);
+}
+
+.top {
+    display: flex;
+    padding-top: 20px;
+}
+.classroom-main {
+    width: 55vw;
+    height: 100%;
+    float: left;
+}
+.tests {
+    background-color: rgba(255, 217, 0, 0.8);
+    box-shadow: 10px 10px 10px grey;
+    width: 100%;
+    height: 270px;
+    border-radius: 25px;
+}
+.top {
+    padding-bottom: 5px;
+    border-bottom: 2px solid white;
+
+}
+.top > svg {
+    color: white;
+    margin-left: 20px;
+    margin-top: 5px;
+    font-size: 38px;
+}
+.top > h1{
+    color: white;
+    margin-left: 20px;
+    font-size: 35px;
+}
+
+.tests-desc {
+    padding: 20px;
+}
+.box {
+    display: flex;
+}
+.box > h4 {
+    flex: 1;
+    color: white;
+    width: 20%;
+    margin-top: 10px;   
+    padding-bottom: 10px;
+    border-bottom: 1px solid grey;
+}
+.box:hover {
+    background-color: rgb(246, 250, 177);
+}
+.box > h4:hover {
+    color: gray;
+}
+
+.hws {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: rgba(253, 40, 40, 0.8);
+    box-shadow: 10px 10px 10px grey;
+    width: 100%;
+    height: 270px;
+    border-radius: 25px;
+}
+.hw-desc {
+    padding: 20px;
+}
+.hwbox {
+    display: flex;
+}
+
+.hwbox>h4 {
+    flex: 1;
+    color: white;
+    width: 20%;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid grey;
+}
+
+.hwbox:hover {
+    background-color: rgb(255, 153, 153);
+}
+
+.hwbox>h4:hover {
+    color: gray;
+}
+
+.right {
+    box-shadow: 10px 10px 10px grey;
+    border-radius: 25px;
+    background-color: magenta;
+    width: 25vw;
+    /* max-height: 100%; */
+    float: right;
+}
+.doubtbox {
+    display: flex;
+    flex-direction: column;
+    min-height: 550px;
+}
+.chat-top> h3 {
+    color: white;
+    flex: 0.2;
+    line-height: 60px;
+    text-align: center;
+}
+.chat-mid {
+    flex: 1;
+    background-color: rgb(235, 235, 235);
+    overflow: scroll;
+    padding: 10px 5px;
+}
+.chat-bottom {
+    height: 60px;
+    display: flex;
+    padding: 10px;
+}
+.chat-bottom > input {
+    margin: 5px;
+    flex: 1;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid grey;
+}
+.chat-bottom > button {
+    border-radius: 50%;
+    color: magenta;
+    border: none;
+    padding: 5px;
+}
+.chat-mid > span {
+    margin-top: 5px;
+
+}
+.name-left {
+    float: left;
+    width: 100%;
+    font-size: 13px;
+    margin-top: 5px;
+}
+.name-right {
+    float: right;
+    width: 100%;
+    font-size: 13px;
+    margin-top: 5px;
+}
+.message-right {
+    border-radius: 8px;
+    padding: 4px;
+    float: left;
+    background-color: greenyellow;
+    
+}
+.message-left {
+    border-radius: 8px;
+    padding: 4px;
+    float: left;
+    background-color: rgb(255, 42, 42);
+}
+*::-webkit-scrollbar{
+    display: none;
+}
