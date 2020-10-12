@@ -1,0 +1,31 @@
+.frame {
+    background-color: white;
+    /* opacity: 0.9; */
+    border: 1px solid gray;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 30px 65vw;
+    min-width: 30%;
+    max-width: 30%;
+    min-height: 70vh;
+    max-height: 70vh;
+}
+.whole-login {
+    height: 100vh;
+    background-image: url("/static/images/login-bg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.details {
+    background-color: rgb(230, 228, 228);
+    opacity: 0.9;
+    margin: 20vh 7vw;
+    padding: 20px;
+    line-height: center;
+    max-width: 50vw;
+    border-radius: 15px;
+}
+.details > h6 {
+    padding: 4px;
+}

@@ -11,4 +11,4 @@ def login(request):
 
 # @login_required
 def home(request):
-    return HttpResponse("Home Page")
+    return render(request, 'react.html')
