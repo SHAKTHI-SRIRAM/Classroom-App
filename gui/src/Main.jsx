@@ -10,11 +10,7 @@ import axios from './axios';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
-    const [data , setData] = useState([]);
-
-    useEffect(()=> {
-
-    }, [])
+    
 
     return (
         <div
@@ -58,7 +54,27 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function VerticalTabs() {
+export default function VerticalTabs(fetchUrl) {
+    // const [data , setData] = useState([]);
+
+    useEffect(()=> {
+        async function fetchData() {
+            const request = await axios.get('http://localhost:8000/api/classroom/', {
+                params: {
+                    user: 'shakthi',
+                }
+            })
+            .then((res)=> {
+                console.log(res)
+            }).catch((err) => {
+                console.log(err)
+            })  
+            return request;
+        }
+        fetchData();
+    }, [fetchUrl])
+
+
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -84,6 +100,8 @@ export default function VerticalTabs() {
                 <Tab className='sidebar-comp ' label="Class Six" {...a11yProps(5)} />
                 <Tab className='sidebar-comp ' label="Class Seven" {...a11yProps(6)} />
             </Tabs>
+
+
             <TabPanel value={value} index={0} children={Classroom}>
                 Item One
             </TabPanel>

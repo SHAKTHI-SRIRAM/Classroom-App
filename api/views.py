@@ -12,48 +12,7 @@ from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Classroom, Test, Question, Choice
-from .serializers import ClassroomSerializer
-
-
-# @api_view(['POST'])
-# @user_passes_test(lambda u: u.is_authenticated)
-# @user_passes_test(lambda u: u.is_staff or u.is_superuser)
-# def api_classroom_create_view(request):
-#     serializer = ClassroomSerializer(data=request.POST)
-
-#     group = Group.objects.create(name=request.POST.classname)
-#     user = User.objects.get(username = request.user)
-#     user.groups.add(group)
-
-#     if serializer.is_valid(raise_exception=True):
-#         classroom = serializer.save()
-#         return Response({}, status=201)
-#     return Response({}, status=400)
-
-
-@api_view(['POST'])
-def api_classroom_view(request):
-    if request.method == "POST":
-        if request.user.is_staff():
-            data = {
-                'classname': request.data.get['classname'],
-                'teacher1': request.data.get['teacher1'],
-                'teacher2': request.data.get['teacher2'],
-                'teacher3': request.data.get['teacher3'],
-            }
-            serializer = ClassroomSerializer(data=data)
-            if serializer.is_valid():
-                serializer.save()
-                group = Group.objects.create(data['classname'])
-                user = User.objects.get(username = request.user)
-                user.groups.add(group)
-                return Response(serializer.data, status=201)
-            else:
-                return Response(serializer.errors, status=400)
-        else:
-            return Response({"error": "You are not authorized to create a classroom."}, status=403)
-    else:
-        return Response({"error": "This request method is not allowed"}, status=400)
+from .serializers import ClassroomSerializer, TestSerializer
 
 
 class ClassroomView(APIView):
@@ -75,7 +34,7 @@ class ClassroomView(APIView):
             data = {
                 'message': "You still haven't joined a classroom."
             }
-            return Response(data, status=404)
+            return Response(data, status=200)
 
     def post(self, request, format=None):
         if request.user.is_staff:
@@ -87,12 +46,73 @@ class ClassroomView(APIView):
                 user.groups.add(group)
                 serializer.save()
                 return Response({"message": "The classroom is created"}, status=201)
-            return Response({"error": "The classroom cant be created"}, status=400)
+            return Response({"error": "The classroom cant be created. The details you gave were not proper!"}, status=400)
         else:
             return Response({"error": "You are not authorized to create a class"}, status=403)
     
 
 # TEACHERS VIEWS
+class TestView(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        groups = request.user.groups.all()
+        if groups:
+            data = {'tests': []}
+            test_title = ""
+            for group in groups:
+                classroom = Classroom.objects.get(classname=group.name)
+                tests = Test.objects.filter(classroom=classroom)
+                if tests:
+                    for test in tests:
+                        questions = Question.objects.filter(test=test)
+                        test_data = {
+                                'test_title': test.title,
+                                'deadline': test.deadline,
+                                'qa': [],
+                            }
+                        for question in questions:
+                            choices = Choice.objects.filter(question=question)
+                            qa = {
+                                'question': question.question,
+                                'choices': [],
+                            }
+                            for choice in choices:
+                                choice_dic = {
+                                    'choice': choice.choice,
+                                    'is_correct': choice.is_correct
+                                }
+                                qa['choices'].append(choice_dic)
+                            test_data['qa'].append(qa)
+                            data['tests'].append(test_data)
+                    return Response(data, status=200)
+                else:
+                    return Response({'message': 'You have no tests available'}, status=200)
+        else:
+            data = {
+                'message': "You still haven't joined a classroom."
+            }
+            return Response(data, status=404)
+        pass
+
+    def post(self, request, format=None, *args, **kwargs):
+        if request.user.is_staff:
+            classname = Classroom.objects.get(classname=request.data.classname)
+            title = request.data.title
+            deadline = request.data.deadline
+            Test.objects.create(classname=classname, title=title,  deadline=deadline)
+
+            test = Test.objects.get(title=title)
+            for question_and_answer in request.data.qa:
+                question = question_and_answer.question
+                Question.objects.create(question=question, test=test)
+                for choice in question_and_answer.choices:
+                    Choice.objects.create(choice=choice.choice, is_correct=choice.is_correct, question=question)
+
+            return Response({"message": "The test is created"}, status=201)
+        else:
+            return Response({"error": "You are not authorized to create a class"}, status=403)
+
+
+
 
 
 # STUDENTSVIEWS

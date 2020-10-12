@@ -9,6 +9,6 @@ def login(request):
     return HttpResponse("Login Page")
 
 
-@login_required
+# @login_required
 def home(request):
     return HttpResponse("Home Page")
