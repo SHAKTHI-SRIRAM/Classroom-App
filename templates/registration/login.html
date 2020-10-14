@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div class="whole-login">
@@ -13,26 +14,17 @@
         <h1 class="bree">The Classroom App</h1>  
         <h6 class="grey-text text-darken-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nam sint vero eveniet reiciendis odio impedit optio, non, laborum voluptates ea est ipsum ab fuga quos dignissimos quod eius molestiae? </h6>
     </div>
-    <div class="frame container">
+    
+    <div class="login-frame frame container">
             <div class="form">
             <h4 class="center acme">Login</h4>
-            <form action="" method="post">
+            <form class="login-form" action="" method="post">
                 {% csrf_token %}
-                
-                    <div class="input-field col s12">
-                        <input id="user_name" type="text" class="validate">
-                        <label for="user_name">Username</label>
-                    </div>
-                    <br>
-                    <div class="input-field col s12">
-                        <input id="password" type="text" class="validate">
-                        <label for="password">Password</label>
-                    </div>
+                {{form|crispy}}
                 <button class="btn-flat white-text blue accent-4 waves-effect waves-light" type="submit" name="action">Submit
                     <i class="material-icons right">send</i>
                 </button>
             </form>
-            <h6>Don't have an account? <a>Join us now</a> </h6>
             </div>
         </div>
 </div>

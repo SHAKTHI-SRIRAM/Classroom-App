@@ -22,3 +22,4 @@ class HomeworkSerializer(serializers.ModelSerializer):
         fields = ['classroom', 'title', 'desc', 'hwfile', 'deadline']
 
 
+

@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Crispy Forms
+    'materialize',
+    'crispy_forms',
+    'crispy_forms_materialize',
+
     # REST FRAMEWORK APPS
     'rest_framework',
     'corsheaders',
@@ -157,3 +162,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
     ]
 }
+
+CRISPY_TEMPLATE_PACK = 'materialize_css_forms'

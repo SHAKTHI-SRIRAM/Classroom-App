@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <nav>
+        <div class="acme nav blue accent-4 nav-wrapper">
+            
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons">class</i> Classroom</a>
+        </div>
+    </nav>
+<div class="register-bg">
+    <div class="container-opac container">
+        <div class="register-content">
+        <form action="" method="post">
+            {% csrf_token %}
+            <h2 class="bree center blue-text register-title">
+                Join us now!!..
+            </h2>
+            {{ form|crispy }}
+            <button class="btn-flat white-text blue accent-4 waves-effect waves-light" type="submit" name="action">Register<i class="material-icons right">send</i></button>
+            <h6 class="center">Already have an account? <a href="{% url 'login' %}">Login now</a> </h6>
+        </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
