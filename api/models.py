@@ -46,6 +46,14 @@ class TestResult(models.Model):
         return str(self.student)
 
 
+class TestAttendedStudent(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.student)
+
+
 class Score(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
