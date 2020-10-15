@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="test">
+
+    <nav>
+        <div class="acme nav blue accent-4 nav-wrapper">
+            
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons">class</i> Classroom</a>
+        </div>
+    </nav>
+
+    <div class="container test-frame">
+        <div class="test-top">
+            <h2 class="bree test-title">{{title}}</h2>
+            <div class="flexbox">
+                <h6 class="grey-text test-class acme">{{classroom}}</h6>
+                <h6 class="grey-text test-deadline acme">{{deadline|date:"D, d M, P"}}</h6>
+            </div>
+        </div>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="test-form">
+            {% for q in qa %}
+            <div class="q-box">
+                <h5 class="question alata">{{q.question}}</h5>
+                {% for choice in q.choices %}
+                    <p>
+                    <label>
+                        <input class="with-gap" name="{{q.question}}" id="{{choice.choice}}" value="{{choice.is_correct}}" type="radio" />
+                        <span>{{choice.choice}}</span>
+                    </label>
+                    </p>
+                
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <button class="btn-large blue-accent-4 waves-effect waves-light button" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock content %}

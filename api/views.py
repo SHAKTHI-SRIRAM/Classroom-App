@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Classroom, Test, Question, Choice
+from .models import Classroom, Test, Question, Choice, Homework
 from .serializers import ClassroomSerializer, TestSerializer
 
 
@@ -91,25 +91,47 @@ class TestView(APIView):
                 'message': "You still haven't joined a classroom."
             }
             return Response(data, status=404)
-        pass
 
-    def post(self, request, format=None, *args, **kwargs):
-        if request.user.is_staff:
-            classname = Classroom.objects.get(classname=request.data.classname)
-            title = request.data.title
-            deadline = request.data.deadline
-            Test.objects.create(classname=classname, title=title,  deadline=deadline)
 
-            test = Test.objects.get(title=title)
-            for question_and_answer in request.data.qa:
-                question = question_and_answer.question
-                Question.objects.create(question=question, test=test)
-                for choice in question_and_answer.choices:
-                    Choice.objects.create(choice=choice.choice, is_correct=choice.is_correct, question=question)
-
-            return Response({"message": "The test is created"}, status=201)
+class HomeworkView(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        groups = request.user.groups.all()
+        if groups:
+            data = {'homeworks': []}
+            test_title = ""
+            for group in groups:
+                classroom = Classroom.objects.get(classname=group.name)
+                homeworks = Homework.objects.filter(classroom=classroom)
+                if homeworks:
+                    for test in tests:
+                        questions = Question.objects.filter(test=test)
+                        test_data = {
+                                'test_title': test.title,
+                                'deadline': test.deadline,
+                                'qa': [],
+                            }
+                        for question in questions:
+                            choices = Choice.objects.filter(question=question)
+                            qa = {
+                                'question': question.question,
+                                'choices': [],
+                            }
+                            for choice in choices:
+                                choice_dic = {
+                                    'choice': choice.choice,
+                                    'is_correct': choice.is_correct
+                                }
+                                qa['choices'].append(choice_dic)
+                            test_data['qa'].append(qa)
+                            data['tests'].append(test_data)
+                    return Response(data, status=200)
+                else:
+                    return Response({'message': 'You have no tests available'}, status=200)
         else:
-            return Response({"error": "You are not authorized to create a class"}, status=403)
+            data = {
+                'message': "You still haven't joined a classroom."
+            }
+            return Response(data, status=404)
 
 
 
