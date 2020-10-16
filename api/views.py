@@ -95,39 +95,28 @@ class TestView(APIView):
 
 class HomeworkView(APIView):
     def get(self, request, format=None, *args, **kwargs):
-        groups = request.user.groups.all()
-        if groups:
-            data = {'homeworks': []}
-            test_title = ""
-            for group in groups:
-                classroom = Classroom.objects.get(classname=group.name)
-                homeworks = Homework.objects.filter(classroom=classroom)
-                if homeworks:
-                    for test in tests:
-                        questions = Question.objects.filter(test=test)
-                        test_data = {
-                                'test_title': test.title,
-                                'deadline': test.deadline,
-                                'qa': [],
+        try:
+            if request.user.groups.all():
+                data = {'homeworks': []}
+                test_title = ""
+                groups = request.user.groups.all()
+                for group in groups:
+                    classroom = Classroom.objects.get(classname=group.name)
+                    try:
+                        homeworks = Homework.objects.filter(classroom=classroom)
+                        for homework in homeworks:
+                            hw = {
+                                "classroom": homework.classroom.classname,
+                                "title": homework.title,
+                                "deadline": homework.deadline,
+                                "link": f"student/homework/{homework.title.replace(' ', '-')}",
                             }
-                        for question in questions:
-                            choices = Choice.objects.filter(question=question)
-                            qa = {
-                                'question': question.question,
-                                'choices': [],
-                            }
-                            for choice in choices:
-                                choice_dic = {
-                                    'choice': choice.choice,
-                                    'is_correct': choice.is_correct
-                                }
-                                qa['choices'].append(choice_dic)
-                            test_data['qa'].append(qa)
-                            data['tests'].append(test_data)
-                    return Response(data, status=200)
-                else:
-                    return Response({'message': 'You have no tests available'}, status=200)
-        else:
+                            data['homeworks'].append(hw)
+                    except Homework.objects.filter(classroom=classroom).DoesNotExist:
+                        return Response({'message': 'You have no homeworks are available'}, status=200)
+                return Response(data, status=200)
+
+        except request.user.groups.all().DoesNotExist:
             data = {
                 'message': "You still haven't joined a classroom."
             }

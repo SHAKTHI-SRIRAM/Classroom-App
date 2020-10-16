@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from api.models import Test, Question, Choice, TestResult, TestAttendedStudent
+from api.models import Test, Question, Choice, TestResult, TestAttendedStudent, Homework
 
 # Create your views here.
 @login_required
@@ -55,6 +55,7 @@ def test_view(request, test_title):
 
 
 def test_result_view(request, test_title):
+
     test = Test.objects.get(title=test_title.replace('-', ' '))
     no_of_qs = Question.objects.filter(test=test).count()
     user = User.objects.get(username=request.user)
@@ -76,3 +77,25 @@ def test_result_view(request, test_title):
         return render(request, 'student-test-result.html', data)
 
     return render('Itworks')
+
+
+def hw_view(request, hw_title):
+    if request.method == 'GET':
+        try:
+            homework = Homework.objects.get(title=hw_title.replace('-', ' '))
+            data = {
+                "classroom": homework.classroom.classname,
+                "title": homework.title,
+                "deadline": homework.deadline,
+                "desc": homework.desc,
+                "hwfile": homework.hwfile.path,
+            }
+            return render(request, 'student-hw-view.html', data)
+        except:
+            data = {"message": "The homework you are asking is not available!!.."}
+            return render(request, 'student-hw-view.html', data)
+    
+    elif request.method == 'POST':
+        pass
+
+

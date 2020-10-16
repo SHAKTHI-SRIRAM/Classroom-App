@@ -12,3 +12,13 @@
     margin: 20px auto;
     border-radius: 25px;
 }
+
+/* HW */
+.hw-main {
+    margin: 30px auto;
+    padding: 20px;
+    background-color: rgb(133, 160, 252);
+}
+.hw-main > * {
+    color: white;
+}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="test-result-whole">
+    <nav>
+        <div class="acme nav blue accent-4 nav-wrapper">
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons">class</i> Classroom</a>
+        </div>
+    </nav>
+
+    <div class="hw-main container">
+        <h5 class="hw-title">{{title}}</h5>
+        <br>
+        <div class="box">
+            <h6 class="left">Class: {{classroom}}</h6>
+            <h6 class="right">Deadline: {{deadline}}</h6>
+        </div>
+        <br>
+        <div class="desc">{{desc}}</div><br>
+        <a href='' class="waves-effect waves-light btn"><i class="material-icons left">insert_drive_file</i>Homework File</a>
+    </div>
+</div>
+
+{% endblock content %}
