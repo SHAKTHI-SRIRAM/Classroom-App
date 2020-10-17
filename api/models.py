@@ -57,7 +57,7 @@ class TestAttendedStudent(models.Model):
 class Score(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
-    score = models.IntegerField()
+    score = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return str(self.student)

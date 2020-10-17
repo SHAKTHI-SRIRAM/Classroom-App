@@ -8,7 +8,11 @@ from .forms import UserRegisterForm
 
 @login_required
 def home(request):
-    return render(request, 'react.html')
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('teacher-home')
+        else:
+            return redirect('student-home')
 
 
 def register(request):
