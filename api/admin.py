@@ -3,8 +3,8 @@ from .models import (Classroom, Test, Question, Choice, TestResult, Score, Homew
 
 # Register your models here.
 class ClassroomAdmin(admin.ModelAdmin):
-    list_display = ['classname', 'teacher1', 'teacher2', 'teacher3']
-    search_fields = ['classname', 'teacher1', 'teacher2', 'teacher3']
+    list_display = ['classname', 'teacher1', 'teacher2', 'teacher3', 'class_id']
+    search_fields = ['classname', 'teacher1', 'teacher2', 'teacher3', 'class_id']
     class Meta:
         model = Classroom
 

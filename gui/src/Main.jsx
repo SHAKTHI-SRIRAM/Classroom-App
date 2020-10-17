@@ -59,11 +59,7 @@ export default function VerticalTabs(fetchUrl) {
 
     useEffect(()=> {
         async function fetchData() {
-            const request = await axios.get('http://localhost:8000/api/classroom/', {
-                params: {
-                    user: 'shakthi',
-                }
-            })
+            const request = await axios.get('http://localhost:8000/api/classroom/')
             .then((res)=> {
                 console.log(res)
             }).catch((err) => {

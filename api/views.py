@@ -22,11 +22,13 @@ class ClassroomView(APIView):
             data = {'classrooms': []}
             for group in groups:
                 classroom = Classroom.objects.get(classname=group.name)
+                print(classroom)
                 class_data = {
                     'classname': classroom.classname,
                     'teacher1': classroom.teacher1,
                     'teacher2': classroom.teacher2,
                     'teacher3': classroom.teacher3,
+                    'class_id': classroom.class_id,
                 }
                 data['classrooms'].append(class_data) 
             return Response(data, status=200)

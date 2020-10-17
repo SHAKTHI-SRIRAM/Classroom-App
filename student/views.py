@@ -1,16 +1,40 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 
 from api.models import (Test, Question, Choice, TestResult, TestAttendedStudent, Homework, ReturnedHomework, Classroom, Score)
-from api.forms import ReturnHomeworkForm
 
 
 def student_home(request):
     return render(request, 'react.html')
+
+
+@login_required
+def join_classroom(request):
+    if request.method == 'GET':
+        return render(request, 'join-classroom.html')
+
+    elif request.method == 'POST':
+        class_id = request.POST.get('class_id')
+        try:
+            classroom = Classroom.objects.get(class_id=class_id)
+            user = User.objects.get(username=request.user)
+            group = Group.objects.get(name=classroom.classname)
+            user.groups.add(group)
+            print("added")
+            if group in user.groups.all():
+                print("already thr")
+                return redirect('student-home')
+            else:
+                print("new added")
+                user.groups.add(group)
+                return redirect('student-home')
+        except:
+            data = {"message": "The Class ID you have entered is invalid."}
+            return render(request, 'join-classroom.html', data)
 
 
 @login_required

@@ -8,6 +8,7 @@ class Classroom(models.Model):
     teacher1 = models.CharField(max_length=30)
     teacher2 = models.CharField(max_length=30, null=True, blank=True)
     teacher3 = models.CharField(max_length=30, null=True, blank=True)
+    class_id = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.classname

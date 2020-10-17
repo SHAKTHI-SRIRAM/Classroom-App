@@ -1,0 +1,12 @@
+.join-box {
+    background-color: whitesmoke;
+    width: 600px;
+    height: auto;
+    align-items: center;
+    padding: 40px;
+    margin: 50px auto;
+    box-shadow: 10px 10px 20px gray;
+}
+.join-box > input {
+    width: 90%;
+}
