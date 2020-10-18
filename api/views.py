@@ -20,9 +20,15 @@ class ClassroomView(APIView):
         groups = request.user.groups.all()
         if groups:
             data = {'classrooms': []}
+            data['user'] = request.user.username
+            if request.user.is_staff or request.user.is_superuser:
+                data['is_teacher'] = True
+                data['is_student'] = False
+            else:
+                data['is_teacher'] = False
+                data['is_student'] = True
             for group in groups:
                 classroom = Classroom.objects.get(classname=group.name)
-                print(classroom)
                 class_data = {
                     'classname': classroom.classname,
                     'teacher1': classroom.teacher1,
@@ -87,7 +93,7 @@ class TestView(APIView):
                             data['tests'].append(test_data)
                     return Response(data, status=200)
                 else:
-                    return Response({'message': 'You have no tests available'}, status=200)
+                    return Response({'tests': 'You have no tests available'}, status=200)
         else:
             data = {
                 'message': "You still haven't joined a classroom."
@@ -97,7 +103,6 @@ class TestView(APIView):
 
 class HomeworkView(APIView):
     def get(self, request, format=None, *args, **kwargs):
-        try:
             if request.user.groups.all():
                 data = {'homeworks': []}
                 test_title = ""
@@ -115,17 +120,15 @@ class HomeworkView(APIView):
                             }
                             data['homeworks'].append(hw)
                     except Homework.objects.filter(classroom=classroom).DoesNotExist:
-                        return Response({'message': 'You have no homeworks are available'}, status=200)
+                        return Response({'tests': 'You have no homeworks are available'}, status=200)
                 return Response(data, status=200)
-
-        except request.user.groups.all().DoesNotExist:
-            data = {
-                'message': "You still haven't joined a classroom."
-            }
-            return Response(data, status=404)
-
+            else:
+                data = {
+                    'message': "You still haven't joined a classroom."
+                }
+                return Response(data, status=404)
 
 
 
 
-# STUDENTSVIEWS
+

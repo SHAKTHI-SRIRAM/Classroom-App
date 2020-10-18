@@ -1,0 +1,40 @@
+/* Logout Css */
+.logout-i {
+    font-size: 200px !important;
+    color: rgb(59, 105, 255);
+}
+
+/* Login Css */
+.login-form > .row {
+    margin-bottom: 0px !important;
+}
+.login-form > button {
+    top: -150px;
+}
+.login-form > h6 {
+    top: -150px;
+}
+
+
+/* Register Css */
+.register-bg {
+    height: 100vh;
+    background-image: url("/static/images/login-bg.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+.register-title {
+    margin-top: 0px;
+    padding-top: 35px;
+}
+.register-content {
+    padding: 35px;
+}
+.container-opac {
+    background-color: whitesmoke;
+    opacity: 0.9;
+    padding: 30px auto;
+}
