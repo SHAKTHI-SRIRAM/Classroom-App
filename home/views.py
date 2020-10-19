@@ -6,13 +6,14 @@ from classroom.settings import LOGIN_URL, LOGIN_REDIRECT_URL
 from .forms import UserRegisterForm
 
 
-@login_required
 def home(request):
     if request.user.is_authenticated:
         if request.user.is_staff:
             return redirect('teacher-home')
         else:
             return redirect('student-home')
+    else:
+        return render(request, 'main-home.html')
 
 
 def register(request):

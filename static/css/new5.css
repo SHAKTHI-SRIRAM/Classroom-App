@@ -57,3 +57,45 @@
     max-height: 400px;
     overflow-y: scroll;
 }
+
+.features {
+    height: 800px;
+}
+.feature {
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+.main-flexbox {
+    display: flex;
+    flex-direction: row;
+}
+.main-left {
+    flex: 0.20;
+    height: 300px;
+    width: 300px;
+    transform: skew(-20deg);
+    background-color: rgb(80, 80, 255);
+    left: -50px;
+}
+.main-right {
+    flex: 0.80;
+    transform: skew(-20deg);
+    background-color: white;
+}
+.fea {
+    background-color: rgb(80, 80, 255);
+}
+.feature-topic {
+    transform: skew(20deg);
+    margin-left: -5px;
+    text-align: center;
+    font-size: 40px;
+}
+.feature-desc {
+    transform: skew(20deg);
+    padding: 70px;
+    text-align: justify;
+}
+.nav-icon {
+    padding: 0px 20px;
+}
