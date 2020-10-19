@@ -12,19 +12,19 @@
 
     <div class="container test-frame">
         <div class="test-top">
-            <h2 class="bree test-title">{{title}}</h2>
+            <h2 class="bree test-title">{{test_title}}</h2>
             <div class="flexbox">
                 <h6 class="grey-text test-class acme">{{classroom}}</h6>
                 <h6 class="grey-text test-deadline acme">{{deadline|date:"D, d M, P"}}</h6>
             </div>
         </div>
 
-    <form action="" method="post">
-        {% csrf_token %}
+
+
         <div class="test-form">
             {% for q in qa %}
             <div class="q-box">
-                <h5 class="question alata">{{q.question}}</h5>
+                <h5 class="question alata">{{q.q}}</h5>
                 {% for choice in q.choices %}
                     <p>
                     <label>
@@ -36,13 +36,10 @@
                 {% endfor %}
             </div>
             {% endfor %}
-            <button class="btn-large blue-accent-4 waves-effect waves-light button" type="submit" name="action">Submit
-                <i class="material-icons right">send</i>
-            </button>
         </div>
-    </form>
-    
 
+        
+    </div>
 </div>
 
 

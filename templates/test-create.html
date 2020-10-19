@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="test-create-whole">
+    <nav>
+        <div class="acme nav blue accent-4 nav-wrapper">
+            
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons">class</i> Classroom</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if message %}
+            <h6 class="message">{{message}}</h6>
+            <br/>
+        {% endif %}
+    </div>
+
+    <div class="create-box">
+        <h4 class="bree center">Create Test</h4>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="text" name="test_title" id="" placeholder="Test Title" required>
+            <input type="datetime-local" name="deadline" id="" required>
+            <button class="btn-flat white-text blue accent-4 waves-effect waves-light" type="submit" name="action">Create
+                        <i class="material-icons right">send</i>
+                </button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="add-question-whole">
+    <nav>
+        <div class="acme nav blue accent-4 nav-wrapper">
+            
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons">class</i> Classroom</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if message %}
+            <h6 class="message">{{message}}</h6>
+            <br/>
+        {% endif %}
+    </div>
+
+    <div class="container test-frame">
+        <div class="test-top">
+            <h2 class="bree test-title">{{title}}</h2>
+            <div class="flexbox">
+                <h6 class="grey-text test-class acme">{{classroom}}</h6>
+                <h6 class="grey-text test-deadline acme">{{deadline|date:"D, d M, P"}}</h6>
+            </div>
+        </div>
+
+
+
+        <div class="test-form">
+            {% for q in qa %}
+            <div class="q-box">
+                <h5 class="question alata">{{q.q}}</h5>
+                {% for choice in q.choices %}
+                    <p>
+                    <label>
+                        <input class="with-gap" name="{{q.question}}" id="{{choice.choice}}" value="{{choice.is_correct}}" type="radio" />
+                        <span>{{choice.choice}}
+                            {% if choice.is_correct == 'True' %}
+                            <i class="material-icons">check</i>
+                            {% endif %}
+                        </span>
+                    </label>
+                    </p>
+                
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="add-question-box">
+            <h4 class="pink-text">Add Question</h4>
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="text" name="question" id="" placeholder="Enter the question..." required>
+                <br>
+                <input type="text" name="choice1" id="" placeholder="Choice1" required>
+                <input type="text" name="choice2" id="" placeholder="Choice2" required>
+                <input type="text" name="choice3" id="" placeholder="Choice3">
+                <input type="text" name="choice4" id="" placeholder="Choice4">
+                <!-- <div class="input-field col s12" name="choice">
+                    <select name="choice">
+                    <option value="" disabled selected>Choose correct option</option>
+                    <option value="choice1">Choice 1</option>
+                    <option value="choice2">Choice 2</option>
+                    <option value="choice2">Choice 3</option>
+                    <option value="choice2">Choice 4</option>
+                </select>
+                <label></label>
+                </div> -->
+                <h6 class="pink-text">Choose the correct option</h6>
+                <p>
+                <label>
+                    <input name="correct-choice" value="choice1" id="group1" type="radio" checked />
+                    <span>Choice 1</span>
+                </label>
+                </p>
+                <p>
+                <label>
+                    <input name="correct-choice" value="choice2" id="group1" type="radio" />
+                    <span>Choice 2</span>
+                </label>
+                </p>
+                <p>
+                <label>
+                    <input name="correct-choice" value="choice3" id="group1" type="radio" />
+                    <span>Choice 3</span>
+                </label>
+                </p>    
+                <p>
+                <label>
+                    <input name="correct-choice" value="choice4" id="group1" type="radio" />
+                    <span>Choice 3</span>
+                </label>
+                </p>
+                <!-- <form>
+                <input type="radio" id="" name="gender" value="choice1">
+                <label for="male">Choice 1</label><br>
+                <input type="radio" id="" name="gender" value="choice2">
+                <label for="female">Choice 2</label><br>
+                <input type="radio" id="" name="gender" value="choice3">
+                <label for="other">Choice 3</label>
+                <input type="radio" id="" name="gender" value="choice4">
+                <label for="other">Choice 4</label>
+            </form> -->
+                <button class="btn-flat white-text blue accent-4 waves-effect waves-light" type="submit" name="action">Add Question
+                        <i class="material-icons right">add</i>
+                </button>
+            </form>
+            <a class="waves-effect waves-light btn right" href="{% url 'teacher-home' %}">Finish Test</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

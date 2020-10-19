@@ -132,17 +132,17 @@ export default function VerticalTabs(fetchUrl) {
     console.log(user, is_teacher, is_student, classrooms, tests, homeworks, chats)
 
     const tabsFunc = () => {
-        let response = ""
+        let response = null
         for (let index = 0; index < classrooms.length; index++) {
             const element = classrooms[index];
             
-            let current_tab = `<Tab className='sidebar-comp ' label='${element.classname}' {...a11yProps(${index})} />`
+            let current_tab = <Tab className='sidebar-comp ' label={element.classname} {...a11yProps(index)} />
             response += current_tab
         }
         console.log(response)
         return response
     }
-    
+    const tabs = tabsFunc();
     return (
         <div className={`main ${classes.root}`}>
             <Tabs
@@ -153,7 +153,9 @@ export default function VerticalTabs(fetchUrl) {
                 aria-label="Vertical tabs example"
                 className= {`sidebar ${classes.tabs}`}
             >
-                {tabsFunc}
+                {classrooms.map(item => (
+                    <Tab className='sidebar-comp ' label={item.classname} {...a11yProps(classrooms.indexOf(item))} />
+                ))}
 {/* 
                 <Tab className='sidebar-comp ' label="Computer Science Class 11" {...a11yProps(0)} />
                 <Tab className='sidebar-comp ' label="Class Two" {...a11yProps(1)} />

@@ -41,7 +41,7 @@ class Choice(models.Model):
 class TestResult(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
-    score = models.IntegerField()
+    score = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return str(self.student)

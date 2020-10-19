@@ -1,0 +1,271 @@
+.tabs .indicator {
+    background-color: #2962FF;
+}
+
+.tabs .tab a:focus,
+.tabs .tab a:focus.active,
+.tabs .tab a:hover {
+    background-color: #afc4ff;
+    color: honeydew !important;
+}
+
+.tabs .tab a {
+    color: #2962FF;
+}
+
+.tabs {
+    border-bottom: 2px solid gray;
+    padding-left: 0% !important;
+}
+
+.tabs>li {
+    max-width: 300px;
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: center;
+    border-right: 1px solid rgb(164, 164, 253);
+    overflow: hidden;
+    /* padding: 15px; */
+}
+
+.student-profile {
+    height: 560px;
+    background-color: #82a3fc;
+}
+
+.student-profile,
+.class-tabs {
+    padding: 0px !important;
+}
+
+#student-propic {
+    font-size: 250px;
+    color: white;
+    align-self: center;
+    margin-left: 30px;
+}
+
+.student-name {
+    padding-left: 30px;
+    overflow: hidden;
+}
+
+.score {
+    padding-left: 30px;
+    line-height: 30px;
+    font-size: 30px;
+}
+
+.score>i {
+    color: gold;
+    padding: 0px 7px;
+}
+
+.sidebar-link {
+    width: 90%;
+    margin: 10px auto 10px auto !important;
+    border-top: 1px solid gray;
+    padding: 7px;
+}
+
+.sidebar-link>a {
+    font-size: 20px;
+    color: honeydew;
+    margin-left: 10px;
+}
+
+.sidebar-link:hover {
+    background-color: rgb(223, 223, 223);
+    margin-left: 20px;
+}
+
+.sidebar-link>a:hover {
+    color: black;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile {
+    flex: 1;
+}
+
+.links {
+    flex: 0;
+    bottom: 0;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+.student-profile {
+    height: 105vh;
+}
+.alata {
+    font-family: 'Alata';
+}
+.classroom {
+    padding: 2vw;
+    background-color: rgb(225, 225, 225);
+    width: 100%;
+    height: 90vh;
+    overflow-y: scroll;
+    padding: 20px;
+}
+
+.classroom-top {
+    background-color: rgba(58, 129, 236, 0.9);
+    width: 100%;
+    height: 200px;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 10px grey;
+}
+
+.classroom-top>h1 {
+    color: white;
+    padding: 20px 20px;
+    font-size: 35px;
+    margin: 0px;
+}
+
+.teachers {
+    display: flex;
+    flex: left;
+    margin-left: 40px;
+    margin-right: 40px;
+    border-bottom: grey 1px solid;
+    justify-content: space-between;
+}
+
+.teachers>h5 {
+    color: rgb(83, 83, 83);
+    font-weight: 900;
+    font-size: 17px;
+}
+
+.stats {
+    display: flex;
+    flex: left;
+}
+
+.stats>h5 {
+    margin: 10px 40px;
+    color: rgb(216, 216, 216);
+}
+
+.top {
+    display: flex;
+    padding-top: 0px;
+}
+.top> h1 {
+    margin-top: 20px;
+}
+
+.classroom-main {
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+.tests {
+    background-color: rgba(255, 217, 0, 0.8);
+    box-shadow: 10px 10px 10px grey;
+    width: 100%;
+    height: 270px;
+    border-radius: 25px;
+}
+
+.top {
+    padding-bottom: 5px;
+    border-bottom: 2px solid white;
+
+}
+
+.top>svg {
+    color: white;
+    margin-left: 20px;
+    margin-top: 5px;
+    font-size: 38px;
+}
+
+.top>h1 {
+    color: white;
+    margin-left: 20px;
+    font-size: 35px;
+}
+.top >h1 > i {
+    margin-right: 10px;
+}
+.tests-desc {
+    padding: 20px;
+}
+
+.box {
+    display: flex;
+}
+
+.box>h6 {
+    flex: 1;
+    color: white;
+    width: 20%;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid grey;
+}
+.box > h6 > a {
+    color: white;
+}
+.box>h6>a:hover {
+    color: gray;
+}
+.box:hover {
+    background-color: rgb(246, 250, 177);
+}
+
+.box>h6:hover {
+    color: gray;
+}
+
+.hws {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: rgba(253, 40, 40, 0.8);
+    box-shadow: 10px 10px 10px grey;
+    width: 100%;
+    height: 270px;
+    border-radius: 25px;
+}
+
+.hw-desc {
+    padding: 20px;
+}
+
+.hwbox {
+    display: flex;
+}
+
+.hwbox>h6 {
+    flex: 1;
+    color: white;
+    width: 20%;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid grey;
+}
+.hwbox > h6 > a {
+    color: white;
+}
+.hwbox>h6>a:hover {
+    color: gray;
+}
+.hwbox:hover {
+    background-color: rgb(255, 153, 153);
+}
+
+.hwbox>h6:hover {
+    color: gray;
+}
+

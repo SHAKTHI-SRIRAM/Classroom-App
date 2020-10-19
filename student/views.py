@@ -6,10 +6,85 @@ from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 
 from api.models import (Test, Question, Choice, TestResult, TestAttendedStudent, Homework, ReturnedHomework, Classroom, Score)
+from api.forms import ReturnedHomeworkForm
 
 
+@login_required
 def student_home(request):
-    return render(request, 'react.html')
+    user = User.objects.get(username=request.user)
+    scores = Score.objects.filter(student=request.user)
+    total_score  = 0
+    for score in scores:
+        total_score += score.score
+    data = {
+        'user': request.user,
+        'score': total_score,
+        'classrooms' : []
+        }
+    try:
+        groups = user.groups.all()
+        print(groups)
+        for group in groups:
+            print(group)
+            classroom = Classroom.objects.get(classname=group.name)
+            print(classroom)
+            userscore = Score.objects.get(student=request.user, classroom=classroom)
+            print(userscore)
+            user_score = userscore.score
+            print(user_score)
+            clsrm = {
+                'classname': classroom.classname,
+                'teacher1': classroom.teacher1,
+                'teacher2': classroom.teacher2,
+                'teacher3': classroom.teacher3,
+                'pk': classroom.pk,
+                'your_score': 0,
+                'no_of_tests': 0,
+                'no_of_homeworks': 0,
+                'tests': [],
+                'homeworks': [],
+                }
+            clsrm['your_score'] = user_score
+            print(clsrm)
+            try:
+                tests = Test.objects.filter(classroom=classroom)
+                print(tests)
+                no_of_tests = len(tests)
+                print(no_of_tests)
+                clsrm['no_of_tests'] = no_of_tests
+                for test in tests:
+                    link = test.title.replace(' ', '-')
+                    _test_ = {
+                        'test_title': test.title,
+                        'test_link': f'test/{link}',
+                        'deadline': test.deadline,
+                        }
+                    clsrm['tests'].append(_test_)
+            except:
+                pass
+
+            try:
+                homeworks = Homework.objects.filter(classroom=classroom)
+                no_of_homeworks = len(homeworks)
+                clsrm['no_of_homeworks'] = no_of_homeworks
+
+                for homework in homeworks:
+                    link = homework.title.replace(' ', '-')
+                    _homework_ = {
+                        'homework_title': homework.title,
+                        'homework_link': f'homework/{link}',
+                        'deadline': homework.deadline,
+                    }
+                    clsrm['homeworks'].append(_homework_)
+                
+            except:
+                pass
+            data['classrooms'].append(clsrm)
+        print(data)
+        return render(request, 'student-home.html', data)
+
+    except:
+        return render(request, 'student-home.html', {"message": "You haven't joined a class yet"})
 
 
 @login_required
@@ -18,20 +93,28 @@ def join_classroom(request):
         return render(request, 'join-classroom.html')
 
     elif request.method == 'POST':
-        class_id = request.POST.get('class_id')
+        class_id = int(request.POST.get('class_id'))
         try:
             classroom = Classroom.objects.get(class_id=class_id)
             user = User.objects.get(username=request.user)
             group = Group.objects.get(name=classroom.classname)
-            user.groups.add(group)
-            print("added")
-            if group in user.groups.all():
-                print("already thr")
-                return redirect('student-home')
+            if user.is_staff or user.is_superuser:
+                if group in user.groups.all():
+                    return redirect('teacher-home')
+                else:
+                    user.groups.add(group)
+                    return redirect('teacher-home')
             else:
-                print("new added")
-                user.groups.add(group)
-                return redirect('student-home')
+                if group in user.groups.all():
+                    score = Score.objects.get(classroom=classroom, student=user)
+                    score.save()
+                    return redirect('student-home')
+                else:
+                    score = Score.objects.create(classroom=classroom, student=user, score=0)
+                    score.save()
+                    user.groups.add(group)
+                    return redirect('student-home')
+
         except:
             data = {"message": "The Class ID you have entered is invalid."}
             return render(request, 'join-classroom.html', data)
@@ -44,7 +127,7 @@ def test_view(request, test_title):
         score = 0
         for item in request.POST:
             if item != 'csrfmiddlewaretoken' and item != 'action':
-                if request.POST[item]:
+                if request.POST[item] == "True":
                     score += 10
 
         student = User.objects.get(username=request.user)
@@ -67,8 +150,12 @@ def test_view(request, test_title):
                 score_.score = new_score
                 score_.save()
 
-            TestAttendedStudent.objects.create(test=test, student=student)
-            TestResult.objects.get_or_create(student=student, test=test, score=score)
+            TestAttendedStudent.objects.get_or_create(test=test, student=student)
+            test_result = TestResult.objects.get_or_create(student=student, test=test)
+            test_result = TestResult.objects.get_or_create(student=student, test=test)
+            print(test_result)
+            test_result[0].score = score
+            test_result[0].save()
             return redirect("student_test_result_view", test_title=test_title)
         else:
             return HttpResponse("<h1>You have exceeded the timelimit of the test.</h1>")
@@ -135,26 +222,31 @@ def hw_view(request, hw_title):
     if request.method == 'GET':
         try:
             homework = Homework.objects.get(title=hw_title.replace('-', ' '))
-            hw_path = homework.hwfile.path
-            print(hw_path)
-            path_list = hw_path.rpartition('\\')
-            hw_pa = homework.classroom.classname.replace(' ', '%20')
-            link = f'/media/{hw_pa}/{path_list[-1]}'
-            data = {
-                    "classroom": homework.classroom.classname,
-                    "title": homework.title,
-                    "deadline": homework.deadline,
-                    "desc": homework.desc,
-                    "hwfile": link,
-                    "form": ReturnHomeworkForm()
-                }
-            return render(request, 'student-hw-view.html', data)
+            print(homework)
+            try:
+                hw_path = homework.hwfile.path
+                print(hw_path)
+                path_list = hw_path.rpartition('\\')
+                hw_pa = homework.classroom.classname.replace(' ', '%20')
+                link = f'/media/{hw_pa}/{path_list[-1]}'
+                print(link)
+            except:
+                link = None
+            data = {	          
+                "classroom": homework.classroom.classname,
+                "title": homework.title,	                   
+                "deadline": homework.deadline,	                    
+                "desc": homework.desc,	                                       
+                "form": ReturnedHomeworkForm(),
+            }
+            data['hwfile'] = link       
+            return render(request, 'student-hw-view.html', data)	           
         except:
             data = {"message": "The homework you are asking is not available!!.."}
             return render(request, 'student-hw-view.html', data)
     
     elif request.method == 'POST':
-        form = ReturnHomeworkForm(request.POST, request.FILES)
+        form = ReturnedHomeworkForm(request.POST, request.FILES)
         if form.is_valid():
             hwfile = request.FILES['hwfile']
             student = User.objects.get(username=request.user)
@@ -171,6 +263,7 @@ def hw_view(request, hw_title):
                 link = f'/media/{hw_pa}/{path_list[-1]}'
                 print(link)
                 data = {
+                    "message": "Your homework was not valid",
                     "classroom": homework.classroom.classname,
                     "title": homework.title,
                     "deadline": homework.deadline,

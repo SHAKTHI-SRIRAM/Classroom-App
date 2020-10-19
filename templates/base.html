@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="{% static 'css/test.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/new1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/new3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/new4.css' %}">
+    <link rel="stylesheet" href="{% static 'css/new5.css' %}">
 
     <!-- Materialize Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -46,6 +49,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <!-- Custom Js -->
-
+    <script>
+        $(document).ready(function(){
+            $('.tabs').tabs();
+            $('select').formSelect();
+        })
+    </script>
 </body>
 </html>
