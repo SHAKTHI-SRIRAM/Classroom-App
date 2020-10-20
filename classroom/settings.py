@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     # REST FRAMEWORK APPS
     'rest_framework',
     'corsheaders',
-    # 'rest_framework.authtoken',
 
     # My Apps
     'api.apps.ApiConfig',
@@ -158,7 +157,6 @@ if DEBUG:
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
         'rest_framework.permissions.AllowAny'
     ]
 }

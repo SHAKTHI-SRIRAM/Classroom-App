@@ -1,8 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
 
-from classroom.settings import LOGIN_URL, LOGIN_REDIRECT_URL
 from .forms import UserRegisterForm
 
 

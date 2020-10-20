@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-# Create your models here.
+
 class Classroom(models.Model):
     classname = models.CharField(max_length=80)
     teacher1 = models.CharField(max_length=30)

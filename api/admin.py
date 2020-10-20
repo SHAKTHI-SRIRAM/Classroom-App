@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import (Classroom, Test, Question, Choice, TestResult, Score, Homework, ReturnedHomework, DoubtBox, TestAttendedStudent)
 
-# Register your models here.
+
 class ClassroomAdmin(admin.ModelAdmin):
     list_display = ['classname', 'teacher1', 'teacher2', 'teacher3', 'class_id']
     search_fields = ['classname', 'teacher1', 'teacher2', 'teacher3', 'class_id']

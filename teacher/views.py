@@ -5,23 +5,19 @@ from django.contrib.auth.models import User, Group
 
 from api.models import (Test, Question, Choice, TestResult, TestAttendedStudent, Homework, ReturnedHomework, Classroom, Score)
 
-# Create your views here.
+
 @login_required
 def teacher_home(request):
     if request.user.is_staff or request.user.is_superuser:
         user = User.objects.get(username=request.user)
-        print(user)
         data = {
             "user": request.user,
             "classrooms": [],
         }
         try:
             groups = user.groups.all()
-            print(groups)
             for group in groups:
-                print(group)
                 classroom = Classroom.objects.get(classname=group.name)
-                print(classroom)
                 clsrm = {
                     'classname': classroom.classname,
                     'teacher1': classroom.teacher1,
@@ -37,7 +33,6 @@ def teacher_home(request):
 
                 try:
                     tests = Test.objects.filter(classroom=classroom)
-                    print(tests)
                     no_of_tests = len(tests)
                     clsrm['no_of_tests'] = no_of_tests
                     for test in tests:
@@ -47,14 +42,12 @@ def teacher_home(request):
                             'test_link': f'test-returned/{link}',
                             'deadline': test.deadline,
                             }
-                        print(_test_)
                         clsrm['tests'].append(_test_)
                 except:
                     pass
 
                 try: 
                     homeworks = Homework.objects.filter(classroom=classroom)
-                    print(homeworks)
                     no_of_homeworks = len(homeworks)
                     clsrm['no_of_homeworks'] = no_of_homeworks
 
@@ -65,7 +58,6 @@ def teacher_home(request):
                             'homework_link': f'homework-returned/{link}',
                             'deadline': homework.deadline,
                         }
-                        print(_homework_)
                         clsrm['homeworks'].append(_homework_)
                 except:
                     pass
@@ -173,11 +165,10 @@ def test_create_view(request, classname):
 
         elif request.method == 'POST':
             classroom = Classroom.objects.get(classname=classname.replace('-', ' '))
-            print(request.POST)
             title = request.POST['test_title']
             deadline = request.POST['deadline']
             Test.objects.create(classroom=classroom, title=title, deadline=deadline)
-            test = Test.objects.get(title=title)
+            test = Test.objects.filter(title=title, classroom=classroom).last()
             link = test.title.replace(' ', '-')
             redirect_link = f'/teacher/add-question/{link}'
             return redirect(redirect_link)
@@ -185,13 +176,13 @@ def test_create_view(request, classname):
     else:
         return HttpResponse('''
         You are not authenticated to view this page. Please contact the admin to get staff status.''')
-    
+
 
 @login_required
 def add_question(request, test_title):
     if request.user.is_staff or request.user.is_superuser:
         if request.method == 'GET':
-            test = Test.objects.get(title=test_title.replace('-', ' '))
+            test = Test.objects.filter(title=test_title.replace('-', ' ')).last()
             data = {
                 "title": test.title,
                 "deadline": test.deadline,
@@ -218,15 +209,12 @@ def add_question(request, test_title):
                 return render(request, 'add-question.html', {"message": "No questions are created yet!"})
 
         elif request.method == 'POST':
-            print(request.POST)
             data = request.POST
             question = data['question']
-            test = Test.objects.get(title=test_title.replace('-', ' '))
+            test = Test.objects.filter(title=test_title.replace('-', ' ')).last()
             q = Question.objects.create(question=question, test=test)
-            print(q)
             correct_choice = data['correct-choice']
             c_choice = data[correct_choice]
-            print(c_choice)
             if data['choice1'] != '':
                 if data['choice1'] == c_choice:
                     Choice.objects.create(question=q, choice=data['choice1'], is_correct=True)
@@ -263,7 +251,6 @@ def homework_create_view(request, classname):
 
         elif request.method == 'POST':
             classroom = Classroom.objects.get(classname=classname.replace('-', ' '))
-            print(request.POST)
             title = request.POST['title']
             deadline = request.POST['deadline']
             hwfile = request.FILES['hwfile']
@@ -281,7 +268,7 @@ def homework_create_view(request, classname):
 def test_returned_view(request, test_title):
     if request.user.is_staff or request.user.is_superuser:
         title = test_title.replace('-', ' ')
-        test = Test.objects.get(title=title)
+        test = Test.objects.filter(title=title).last()
         returned_tests = TestResult.objects.filter(test=test)
         data = {
             "classroom": test.classroom,
@@ -316,7 +303,6 @@ def homework_returned_view(request, hw_title):
             link = f'/media/{hw.student}/{path_list[-1]}'
             h_w['hwfile'] = link
             data['returned_hws'].append(h_w)
-        print(data)
         return render(request, 'hw-result.html', data)
     else:
         return HttpResponse('''

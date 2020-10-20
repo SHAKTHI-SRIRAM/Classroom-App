@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 
 from api.models import (Test, Question, Choice, TestResult, TestAttendedStudent, Homework, ReturnedHomework, Classroom, Score)
@@ -23,15 +22,10 @@ def student_home(request):
         }
     try:
         groups = user.groups.all()
-        print(groups)
         for group in groups:
-            print(group)
             classroom = Classroom.objects.get(classname=group.name)
-            print(classroom)
             userscore = Score.objects.get(student=request.user, classroom=classroom)
-            print(userscore)
             user_score = userscore.score
-            print(user_score)
             clsrm = {
                 'classname': classroom.classname,
                 'teacher1': classroom.teacher1,
@@ -45,12 +39,9 @@ def student_home(request):
                 'homeworks': [],
                 }
             clsrm['your_score'] = user_score
-            print(clsrm)
             try:
                 tests = Test.objects.filter(classroom=classroom)
-                print(tests)
                 no_of_tests = len(tests)
-                print(no_of_tests)
                 clsrm['no_of_tests'] = no_of_tests
                 for test in tests:
                     link = test.title.replace(' ', '-')
@@ -80,7 +71,6 @@ def student_home(request):
             except:
                 pass
             data['classrooms'].append(clsrm)
-        print(data)
         return render(request, 'student-home.html', data)
 
     except:
@@ -131,13 +121,12 @@ def test_view(request, test_title):
                     score += 10
 
         student = User.objects.get(username=request.user)
-        test = Test.objects.get(title=test_title.replace('-', ' '))
+        test = Test.objects.filter(title=test_title.replace('-', ' ')).last()
         if test.deadline > timezone.now():
             classroom = test.classroom
             user = User.objects.get(username=request.user)
 
             user_score = Score.objects.get_or_create(student=user, classroom=classroom)
-            print(user_score)
             user_score_score = user_score[0].score
             if user_score[0].score:
                 new_score = user_score_score + score
@@ -153,7 +142,6 @@ def test_view(request, test_title):
             TestAttendedStudent.objects.get_or_create(test=test, student=student)
             test_result = TestResult.objects.get_or_create(student=student, test=test)
             test_result = TestResult.objects.get_or_create(student=student, test=test)
-            print(test_result)
             test_result[0].score = score
             test_result[0].save()
             return redirect("student_test_result_view", test_title=test_title)
@@ -167,7 +155,7 @@ def test_view(request, test_title):
             "title": "", 
             "qa": []
             }
-        test = Test.objects.get(title=test_title.replace('-', ' '))
+        test = Test.objects.filter(title=test_title.replace('-', ' ')).last()
         data['title'] = test.title
         data['classroom'] = test.classroom
         data['deadline'] = test.deadline
@@ -192,9 +180,10 @@ def test_view(request, test_title):
             return HttpResponse("You cannot attend this test")
 
 
+@login_required
 def test_result_view(request, test_title):
 
-    test = Test.objects.get(title=test_title.replace('-', ' '))
+    test = Test.objects.filter(title=test_title.replace('-', ' ')).last()
     no_of_qs = Question.objects.filter(test=test).count()
     user = User.objects.get(username=request.user)
     if TestAttendedStudent.objects.filter(test=test, student=user):
@@ -218,18 +207,16 @@ def test_result_view(request, test_title):
     return render('Itworks')
 
 
+@login_required
 def hw_view(request, hw_title):
     if request.method == 'GET':
         try:
             homework = Homework.objects.get(title=hw_title.replace('-', ' '))
-            print(homework)
             try:
                 hw_path = homework.hwfile.path
-                print(hw_path)
                 path_list = hw_path.rpartition('\\')
                 hw_pa = homework.classroom.classname.replace(' ', '%20')
                 link = f'/media/{hw_pa}/{path_list[-1]}'
-                print(link)
             except:
                 link = None
             data = {	          
@@ -257,11 +244,9 @@ def hw_view(request, hw_title):
             try:
                 homework = Homework.objects.get(title=hw_title.replace('-', ' '))
                 hw_path = homework.hwfile.path
-                print(hw_path)
                 path_list = hw_path.rpartition('\\')
                 hw_pa = homework.classroom.classname.replace(' ', '%20')
                 link = f'/media/{hw_pa}/{path_list[-1]}'
-                print(link)
                 data = {
                     "message": "Your homework was not valid",
                     "classroom": homework.classroom.classname,

@@ -1,15 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import user_passes_test
+from django.http import JsonResponse
 from django.contrib.auth.models import Group, User
 
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework.authentication import BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
 
 from .models import Classroom, Test, Question, Choice, Homework
 from .serializers import ClassroomSerializer, TestSerializer
@@ -57,9 +52,8 @@ class ClassroomView(APIView):
             return Response({"error": "The classroom cant be created. The details you gave were not proper!"}, status=400)
         else:
             return Response({"error": "You are not authorized to create a class"}, status=403)
-    
 
-# TEACHERS VIEWS
+
 class TestView(APIView):
     def get(self, request, format=None, *args, **kwargs):
         groups = request.user.groups.all()
