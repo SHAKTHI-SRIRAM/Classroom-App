@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="whole-login">
+    <nav>
+        <div class="acme nav blue accent-4 nav-wrapper">
+            
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons">class</i> Classroom</a>
+        </div>
+    </nav>
+
+    <div class="details left">
+        <h1 class="bree">The Classroom App</h1>  
+        <h6 class="grey-text text-darken-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nam sint vero eveniet reiciendis odio impedit optio, non, laborum voluptates ea est ipsum ab fuga quos dignissimos quod eius molestiae? </h6>
+    </div>
+    
+    <div class="frame container">
+            <div class="form">
+                <div class="pic center">
+                    <i class="logout-i center material-icons">person_pin</i>
+                </div>
+                <h4 class="acme center">You have been logged out!..</h4>
+                <h6 class="center"><a href="{% url 'login' %}">Log in again</a> </h6>
+                <h6 class="center">Don't have an account? <a>Join us now</a> </h6>
+            </div>
+        </div>
+</div>
+
+
+{% endblock content %}

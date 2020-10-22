@@ -1,0 +1,99 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="student-home-whole">
+    <nav>
+        <div class="acme nav blue accent-4 nav-wrapper">
+            
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons">class</i> Classroom</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if message %}
+            <h6 class="message">{{message}}</h6>
+            <br/>
+        {% endif %}
+    </div>
+    
+    <div class="row sidebar">
+        <div class="col l3 s12 m12 student-profile">
+            <div class="profile">
+                <i class="material-icons propic" id="student-propic">person_pin</i>
+                <h3 class="white-text student-name bree">{{user|title}}</h3>
+                <h5 class="white-text acme score">Score: {{score}}<i class="material-icons star">star</i> </h5>
+            </div>
+            <div class="links">
+            <ul>
+                <li class="sidebar-link"><a href="join-classroom">Join Classroom</a></li>
+                <li class="sidebar-link"><a href="/logout">Logout</a></li>
+            </ul>
+            </div>
+        </div>
+
+
+        <div class="col l9 s12 m12 class-tabs">
+            <ul id="tabs-swipe-demo" class="tabs">
+                {% for class in classrooms %}
+                    <li class="tab"><a href="#{{class.pk}}">{{class.classname}}</a></li>
+                {% endfor %}
+            </ul>
+
+    {% for class in classrooms %}
+    <div id={{class.pk}} class='classroom'>
+            <div class="classroom-top">
+                <h1 class="bree">{{class.classname}}</h1>
+                <div class="teachers">
+                    <h5>{{class.teacher1}}</h5>
+                    {% if class.teacher2 %}
+                    <h5>{{class.teacher2}}</h5>
+                    {% endif %}
+                    {% if class.teacher3 %}
+                    <h5>{{class.teacher3}}</h5>
+                    {% endif %}
+                </div>
+                <div class="stats">
+                <h5 class="bree">Your Score: {{class.your_score}}</h5>
+                <h5 class="bree">No.of tests: {{class.no_of_tests}}</h5>
+                <h5 class="bree">No.of homeworks: {{class.no_of_homeworks}}</h5>
+                </div>
+            </div>
+            <div class="classroom-main">
+                <div class="tests">
+                    
+                    <div class="top">
+                        <h1 class="bree"><i class="material-icons">create</i>Tests</h1>
+                    </div>
+                    <div class="tests-desc">
+                        {% for test in class.tests %}
+                        <div class="box">
+                            <h6 class="alata"><a href="{{test.test_link}}">{{test.test_title}}</a></h6>
+                            <p>{{ test.deadline|date:"D, d M, P" }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="hws">
+                    <div class="top">
+                        <h1 class="bree"><i class="material-icons">book</i>Homeworks</h1>
+                    </div>
+                    <div class="hw-desc">
+                        {% for homework in class.homeworks %}
+                        <div class="hwbox">
+                            <h6 class="alata"><a href='{{homework.homework_link}}'>{{homework.homework_title}}</a></h6>
+                            <p>{{ homework.deadline|date:"D, d M, P" }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endfor %}
+        </div>
+    </div>
+
+    
+</div>
+{% endblock content %}

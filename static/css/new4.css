@@ -1,0 +1,16 @@
+.teacher-sidebar {
+    background-color: gold;
+    height: 90vh;
+}
+.create-classroom-whole {
+    align-content: center;
+}
+.create-box {
+    width: 50%;
+    margin: 20px auto;
+    padding: 40px;
+    border: 2px solid #2962FF;
+    border-radius: 25px;
+    background-color: whitesmoke;
+}
+

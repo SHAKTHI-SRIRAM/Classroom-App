@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="teacher-home-whole">
+    <nav>
+        <div class="acme nav blue accent-4 nav-wrapper">
+            
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons">class</i> Classroom</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if message %}
+            <h6 class="message">{{message}}</h6>
+            <br/>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col s12 l3 teacher-sidebar">
+            <div class="profile">
+                <i class="material-icons propic" id="student-propic">person_pin</i>
+                <h3 class="white-text student-name bree">{{user|title}}</h3>
+            </div>
+            <div class="links">
+            <ul>
+                <li class="sidebar-link"><a href="/student/join-classroom">Join Classroom</a></li>
+                <li class="sidebar-link"><a href="create-classroom">Create Classroom</a></li>
+                <li class="sidebar-link"><a href="/logout">Logout</a></li>
+            </ul>
+            </div>
+        </div>
+
+        <div class="col l9 s12 m12 teacher-class-tabs">
+            <ul id="tabs-swipe-demo" class="tabs">
+                {% for class in classrooms %}
+                    <li class="tab"><a href="#{{class.pk}}">{{class.classname}}</a></li>
+                {% endfor %}
+            </ul>
+
+    {% for class in classrooms %}
+    <div id={{class.pk}} class='classroom'>
+            <div class="classroom-top">
+                <h1 class="bree">{{class.classname}}</h1>
+                
+                <div class="teachers">
+                    <h5>{{class.teacher1}}</h5>
+                    {% if class.teacher2 %}
+                    <h5>{{class.teacher2}}</h5>
+                    {% endif %}
+                    {% if class.teacher3 %}
+                    <h5>{{class.teacher3}}</h5>
+                    {% endif %}
+                    <p class="white-text">Class ID: {{class.class_id}}</p>
+                </div>
+                <div class="stats">
+                <h5 class="bree">Your Score: {{class.your_score}}</h5>
+                <h5 class="bree">No.of tests: {{class.no_of_tests}}</h5>
+                <h5 class="bree">No.of homeworks: {{class.no_of_homeworks}}</h5>
+                </div>
+            </div>
+            <div class="create" style="padding: 20px;">
+                <a style="width: 49.5%;" href="test-create/{{class.classname}}" class="waves-effect waves-light btn-large">Create Test<i class="material-icons left">add</i></a>
+                <a style="width: 49.5%;" href="homework-create/{{class.classname}}" class="waves-effect waves-light btn-large">Create Homework<i class="material-icons right">check</i></a>
+            </div>
+            <div class="classroom-main">
+                <div class="tests">
+                    
+                    <div class="top">
+                        <h1 class="bree"><i class="material-icons">create</i><a class="white-text bree right" href="test-list/{{class.classname}}">Tests</a></h1>
+                        <h6 class="right"></h6>
+                    </div>
+                    <div class="tests-desc">
+                        {% for test in class.tests %}
+                        <div class="box">
+                            <h6 class="alata"><a href="{{test.test_link}}">{{test.test_title}}</a></h6>
+                            <p>{{ test.deadline|date:"D, d M, P" }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="hws">
+                    <div class="top">
+                        <h1 class="bree"><i class="material-icons">book</i>Homeworks</h1>
+                    </div>
+                    <div class="hw-desc">
+                        {% for homework in class.homeworks %}
+                        <div class="hwbox">
+                            <h6 class="alata"><a href='{{homework.homework_link}}'>{{homework.homework_title}}</a></h6>
+                            <p>{{ homework.deadline|date:"D, d M, P" }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

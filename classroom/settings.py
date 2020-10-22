@@ -39,10 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Crispy Forms
+    'materialize',
+    'crispy_forms',
+    'crispy_forms_materialize',
+
     # REST FRAMEWORK APPS
     'rest_framework',
     'corsheaders',
-    # 'rest_framework.authtoken',
 
     # My Apps
     'api.apps.ApiConfig',
@@ -131,6 +135,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static-root')
 
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -149,7 +157,8 @@ if DEBUG:
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+        'rest_framework.permissions.AllowAny'
     ]
 }
+
+CRISPY_TEMPLATE_PACK = 'materialize_css_forms'

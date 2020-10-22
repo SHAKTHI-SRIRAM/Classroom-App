@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="test-list-whole">
+    <nav>
+        <div class="acme nav blue accent-4 nav-wrapper">
+            
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons">class</i> Classroom</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if message %}
+            <h6 class="message">{{message}}</h6>
+            <br/>
+        {% endif %}
+    </div>
+
+    <div class="container list-main">
+        <div class="class-top">
+            <h3 class="bree classname-test-list">{{classroom}}</h3>
+            <br>
+        </div>
+
+        {% for test in tests %}
+            <div class="test-box">
+                <h5 class="bree test-list-title"><a href="{{test.test_link}}">{{test.test_title}}</a></h5>
+                <h6 class="bree grey-text">{{test.deadline}}</h6>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

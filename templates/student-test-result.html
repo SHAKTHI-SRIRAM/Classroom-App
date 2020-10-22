@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="test-result-whole">
+    <nav>
+        <div class="acme nav blue accent-4 nav-wrapper">
+            
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons">class</i> Classroom</a>
+        </div>
+    </nav>
+    <div class="container">
+        {% if message %}
+            <h6 class="message">{{message}}</h6>
+            <br/>
+            <h6 class="center"><a href="{{test_link}}">Attend test now</a> </h6>
+        {% endif %}
+    </div>
+    <div class="container test-result-frame">
+        <h2 class="bree">{{test_title}}</h2>
+        <h6 class="acme">Name: {{student|title}}</h6>
+        <h6 class="acme">Score: {{score}} / {{total}}</h6>
+    </div>
+</div>
+
+{% endblock content %}

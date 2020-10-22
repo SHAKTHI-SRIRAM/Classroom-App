@@ -9,3 +9,17 @@ class ClassroomSerializer(serializers.ModelSerializer):
         model = Classroom
         fields = ['classname', 'teacher1', 'teacher2', 'teacher3']
 
+
+class TestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Test
+        fields = ['classroom', 'title', 'deadline']
+
+
+class HomeworkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Homework
+        fields = ['classroom', 'title', 'desc', 'hwfile', 'deadline']
+
+
+

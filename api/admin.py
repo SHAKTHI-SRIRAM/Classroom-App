@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Classroom, Test, Question, Choice, TestResult, Score, Homework, ReturnedHomework, DoubtBox
+from .models import (Classroom, Test, Question, Choice, TestResult, Score, Homework, ReturnedHomework, DoubtBox, TestAttendedStudent)
 
-# Register your models here.
+
 class ClassroomAdmin(admin.ModelAdmin):
-    list_display = ['classname', 'teacher1', 'teacher2', 'teacher3']
-    search_fields = ['classname', 'teacher1', 'teacher2', 'teacher3']
+    list_display = ['classname', 'teacher1', 'teacher2', 'teacher3', 'class_id']
+    search_fields = ['classname', 'teacher1', 'teacher2', 'teacher3', 'class_id']
     class Meta:
         model = Classroom
 
@@ -45,6 +45,15 @@ class TestResultAdmin(admin.ModelAdmin):
         model = TestResult
 
 admin.site.register(TestResult, TestResultAdmin)
+
+
+class TestAttendedStudentAdmin(admin.ModelAdmin):
+    list_display = ['student', 'test']
+    search_fields = ['student__username', 'test__title']
+    class Meta:
+        model = TestAttendedStudent
+
+admin.site.register(TestAttendedStudent, TestAttendedStudentAdmin)
 
 
 class ScoreAdmin(admin.ModelAdmin):

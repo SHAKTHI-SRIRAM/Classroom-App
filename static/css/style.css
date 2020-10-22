@@ -1,0 +1,41 @@
+.message {
+    padding: 10px;
+    align-self: center;
+    border: 3px solid blue;
+    background-color: rgb(101, 205, 240);
+    color: white;
+}
+
+.test-result-frame {
+    padding: 20px;
+    background-color: rgb(255, 255, 101);
+    border: 1px solid rgb(255, 219, 13);
+    margin: 20px auto;
+    border-radius: 25px;
+}
+
+/* HW */
+.hw-main {
+    margin: 30px auto;
+    padding: 30px;
+    background-color: rgb(133, 160, 252);
+    border-radius: 25px;
+    color: white;
+    align-items: center;
+}
+.hw-title {
+    width: 90%;
+    border-bottom: 2px solid whitesmoke;
+    margin-bottom: 0px;
+}
+.hw-desc {
+    border-top: 1px solid whitesmoke;
+    margin-top: 20px;
+    font-family: 'alata';
+}
+.hw-desc > h5 {
+    margin-bottom: 0px;
+} 
+.hw-desc > p {
+    padding-left: 30px;
+}

@@ -1,0 +1,101 @@
+.test-list-whole {
+    background-color: indigo;
+}
+.list-main {
+    background-color: rgb(255, 0, 98);
+    border-right: 2px solid gray;
+    border-left: 2px solid gray;
+    height: 90vh;
+    overflow-y: scroll;
+    padding: 20px 50px;
+}
+.classname-test-list{
+    text-decoration: underline;
+}
+.test-box {
+    border: 2px solid grey;
+    border-radius: 25px;
+    background-color: white;
+    box-shadow: 5px 5px 5px gray;
+    display: flex;
+    padding: 30px;
+    margin: 20px;
+}
+
+.test-list-title {
+    width: 90%;
+    margin: 15px auto;
+    border-bottom: 1px solid grey;
+    padding: 10px;
+    margin: 0px;
+    flex: 1;
+}
+.test-list-title > a {
+    color: black;
+}
+.add-question-box {
+    padding: 40px;
+    margin: 30px;
+}
+
+.teacher-sidebar {
+    position: fixed;
+    background-color: rebeccapurple;
+    height: 100vh;
+    /* background-color: gold; */
+    /* height: 90vh; */
+}
+.teacher-class-tabs {
+    margin-left: 340px !important;
+    padding: 0px !important;
+}
+.tests {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+.hws {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.features {
+    height: 800px;
+}
+.feature {
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+.main-flexbox {
+    display: flex;
+    flex-direction: row;
+}
+.main-left {
+    flex: 0.20;
+    height: 300px;
+    width: 300px;
+    transform: skew(-20deg);
+    background-color: rgb(80, 80, 255);
+    left: -50px;
+}
+.main-right {
+    flex: 0.80;
+    transform: skew(-20deg);
+    background-color: white;
+}
+.fea {
+    background-color: rgb(80, 80, 255);
+}
+.feature-topic {
+    transform: skew(20deg);
+    margin-left: -5px;
+    text-align: center;
+    font-size: 40px;
+}
+.feature-desc {
+    transform: skew(20deg);
+    padding: 70px;
+    text-align: justify;
+}
+.nav-icon {
+    padding: 0px 20px;
+}

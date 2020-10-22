@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="join-class-whole">
+    <nav>
+        <div class="acme nav blue accent-4 nav-wrapper">
+            
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons">class</i> Classroom</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if message %}
+            <h6 class="message">{{message}}</h6>
+        {% endif %}
+    </div>
+
+        <div class="join-box">
+            <h4 class="bree">Join classroom</h4>
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="number" name="class_id" id="" placeholder="Enter Class ID">
+                <button class="btn-flat white-text blue accent-4 waves-effect waves-light" type="submit" name="action">Join
+                        <i class="material-icons right">send</i>
+                </button>
+            </form>
+        </div>
+</div>
+
+{% endblock content %}
